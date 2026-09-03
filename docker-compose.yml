@@ -1,0 +1,15 @@
+services:
+  kya-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sandafee/ai-agent:latest
+    container_name: kya-agent
+    ports:
+      - "8085:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
