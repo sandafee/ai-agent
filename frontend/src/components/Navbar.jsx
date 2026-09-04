@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Bell, Cpu, Search, Activity } from 'lucide-react';
 
-export default function Navbar({ onOpenScanner }) {
+export default function Navbar({ onOpenScanner, currentUser, onLogout }) {
   return (
     <header className="h-16 border-b border-slate-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-30 px-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -37,17 +37,27 @@ export default function Navbar({ onOpenScanner }) {
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full"></span>
         </button>
 
-        {/* User Identity Profile */}
+        {/* User Identity Profile & Logout */}
         <div className="flex items-center gap-3 pl-2 border-l border-slate-800">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-xs text-black shadow-md shadow-cyan-900/40">
-            CB
+            {currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : 'CB'}
           </div>
           <div className="hidden md:block text-left">
-            <p className="text-xs font-semibold text-slate-200">Central Bank Regulator</p>
-            <p className="text-[10px] text-cyan-400 font-mono">KYA Authority Root</p>
+            <p className="text-xs font-semibold text-slate-200">{currentUser?.name || 'Central Bank Regulator'}</p>
+            <p className="text-[10px] text-cyan-400 font-mono">{currentUser?.organization || 'KYA Authority Root'}</p>
           </div>
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-red-300 hover:bg-red-950/40 border border-transparent hover:border-red-500/30 transition-all text-xs font-mono"
+              title="Sign Out"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
       </div>
     </header>
   );
 }
+

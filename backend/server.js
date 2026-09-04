@@ -8,6 +8,7 @@ const errorHandler = require('./middleware/errorHandler');
 const requestLogger = require('./middleware/requestLogger');
 
 // Routes
+const authRoutes = require('./routes/authRoutes');
 const agentRoutes = require('./routes/agentRoutes');
 const mandateRoutes = require('./routes/mandateRoutes');
 const didRoutes = require('./routes/didRoutes');
@@ -37,7 +38,9 @@ app.get('/api/health', (req, res) => {
 });
 
 // API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/agents', agentRoutes);
+
 app.use('/api/mandates', mandateRoutes);
 app.use('/api/dids', didRoutes);
 app.use('/api/credentials', credentialRoutes);
